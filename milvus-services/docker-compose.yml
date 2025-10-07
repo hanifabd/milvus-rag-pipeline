@@ -41,6 +41,23 @@ services:
     depends_on:
       - "etcd"
       - "minio"
+  
+  rabbitmq:
+    container_name: milvus-rabbitmq
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5672:5672"     # AMQP protocol port
+      - "15672:15672"   # Management UI
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/rabbitmq:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
 networks:
   default:
