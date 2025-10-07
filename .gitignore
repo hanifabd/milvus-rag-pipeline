@@ -1,0 +1,9 @@
+.env
+onprem-multilingual-e5-base
+onprem-multilingual-e5-small
+onprem-bge-reranker-v2-m3
+onprem-bge-reranker-base
+volumes
+*pyc
+*.sqlite
+requirements-old.txt
