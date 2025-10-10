@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "385b4ca1-c1bd-4735-994c-03bd0e02a828",
+		"name": "RAG API - Information Retriever",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "12172144"
+	},
+	"item": [
+		{
+			"name": "Main",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:2024"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload - Upload File",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/Anaconda Project/Jatis Mobile/explore_rag/information_retrieval/uploaded_information_data/mbappe_knowledge.pdf"
+						}
+					]
+				},
+				"url": "http://127.0.0.1:2024/upload",
+				"description": "Generated from cURL: curl -X POST \"http://127.0.0.1:8000/upload\" \\\r\n-H \"accept: application/json\" \\\r\n-H \"Content-Type: multipart/form-data\" \\\r\n-F \"file=@/path/to/your/file.pdf\"\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Insert - Insert Information",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client_id\": \"ex_client_id\",\r\n    \"project_id\": \"ex_project_id\",\r\n    \"collection_name\": \"coll_hnsw_v6\",\r\n    \"collection_index_type\": \"HNSW\",\r\n    \"files_path\": [\r\n        \"uploaded_information_data\\\\uu_pdp.pdf\"\r\n    ],\r\n    \"separator_type\":\"IndoLegalTextSplitter\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:2024/insert"
+			},
+			"response": []
+		},
+		{
+			"name": "Insert - Check Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:2024/insert/status/782aca16-857d-4e5a-aa73-7e03597a13bd"
+			},
+			"response": []
+		},
+		{
+			"name": "Search - Search Information",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client_id\": \"ex_client_id\",\r\n    \"project_id\": \"ex_project_id\",\r\n    \"collection_name\": \"coll_hnsw_v6\",\r\n    \"collection_index_type\": \"HNSW\",\r\n    \"query\": \"Data Pribadi\",\r\n    \"number_results\": \"10\",\r\n    \"rerank\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:2024/search"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete - Delete Information",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client_id\": \"ex_client_id\", \r\n    \"project_id\": \"ex_project_id\", \r\n    \"collection_name\": \"coll_ivf_v4\", \r\n    \"file_id\": \"33bdbadb-cfe8-4cb4-a64f-9ff447eb3091\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:2024/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Vector - Vectorized Text",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\": \"prestasi mbappe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:2025/vectorize-query",
+				"description": "Generated from cURL: curl -X POST \"http://localhost:8000/vectorize-query\" -H \"Content-Type: application/json\" -d '{\"text\": \"Your single query text\"}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Vector - Vectorized Documents",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"texts\": [\r\n        \"Document text 1\", \r\n        \"Document text 2\", \r\n        \"Document text 3\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:2025/vectorize-documents",
+				"description": "Generated from cURL: curl -X POST \"http://localhost:8000/vectorize-documents\" -H \"Content-Type: application/json\" -d '{\"texts\": [\"Document text 1\", \"Document text 2\", \"Document text 3\"]}'\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Reranker - Rerank Documents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": \"kantor bjtsa alamatnya dimana sih?\",\r\n    \"top_k\": 3,\r\n    \"documents\": [\r\n        \"\\nBJTSA dimana?\\nKantor pusat BJTSA dimana?\\nApa alamat kantor pusat BJTSA?\\nBerikut adalah informasi mengenai kantor pusat BJTSA.\\nGraha BJTSA\\nJl. Matahari Tunggal\\nJakarta Selatan\\nTelepon: (62-21) 123 4567\\nI-Telex: 123456 BJTSA\\nFaks: (62-21) 890 1234\\nSurel: bjtsa@bjtsa.co.id\\nSitus web: www.bjtsa.co.id\\nPO Box: Jakarta Selatan\\n\",\r\n        \"\\nAlamat kantor BJTSA?\\nJl. Mampang Prpt. Raya Gg. H. Marzuki No.3, RT.6/RW.6, Mampang Prpt., Kec. Mampang\\nPrpt., Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12790\\n\",\r\n        \"\\nDi mana kantor pusat PT BJTSA Asset Management atau BJTSA-AM?\\nKantor Pusat BJTSA Asset Management terletak di Tower 1ABC, Jakarta Selatan.\\n\",\r\n        \"\\nBagaimana cara menghubungi Bancassurance milik BJTSA?\\nUntuk informasi lebih lanjut, hubungi Bancassurance Specialist kami di Kantor Cabang BJTSA.\\n\",\r\n        \"\\nApa nama perusahaan dari BJTSA?\\nNama perusahaan dari BJTSA adalah PT Bank Jatis (Persero) Tbk.\\n\",\r\n        \"\\nApa itu ATM BJTSA?\\nATM BJTSA adalah kanal layanan perbankan yang siap memfasilitasi nasabah selama 24 jam\\ndalam melakukan transaksi setor tarik tunai (Cash Recycle Machine/CRM), cek saldo, transfer,\\npembayaran dan pembelian. Layanan ATM/CRM BJTSA saat ini berjumlah 12.345 mesin per 31\\nDesember 2053 ada diantaranya terdapat 6.789 ATM Disabilitas yang tersebar di seluruh\\nIndonesia dan terkoneksi dengan Jaringan ATM Link, Merah Putih, Bersama, Prima, Alto, serta\\nJaringan Internasional seperti Mastercard, Visa, JCB, APN, Union Pay dan Cirrus.\\n\",\r\n        \"\\nApa saja fokus jaringan Kantor BJTSA?\\nJaringan Kantor BJTSA fokus dalam memberikan pelayanan dan solusi bisnis serta kemudahan\\ntransaksi nasabah BJTSA baik di dalam negeri maupun di luar negeri.\\n\",\r\n        \"\\nDimana kita dapat mengakses situs web BJTSA?\\nBJTSA memiliki situs web resmi yaitu bjtsa.co.id yang dapat diakses oleh masyarakat luas\\ndalam Bahasa Indonesia dan Inggris.\\n\",\r\n        \"\\nBerapa jumlah kantor dan jaringan BJTSA per 31 Desember 2053?\\nHingga 31 Desember 2053, BJTSA memiliki 1 (satu) kantor pusat, 17 kantor wilayah, 10\\n(sepuluh) jaringan kantor luar negeri, dan 1.838 jaringan kantor yang terdiri dari kantor cabang,\\nkantor cabang pembantu, dan sentra bisnis. Dari 10 (sepuluh) jaringan kantor luar negeri\\ntersebut, terdiri dari 6 (enam) kantor luar negeri, 1 (satu) sub-branch, 2 (dua) kantor cabang\\nremittance, dan 1 (satu) kantor perwakilan yang tersebar di 7 (tujuh) negara.\\n\",\r\n        \"\\nDi negara mana saja BJTSA beroperasi?\\nDimana wilayah operasional BJTSA?\\nBJTSA beroperasi di 11 negara yaitu: Indonesia, Filipina, Singapura, Hong Kong, Jepang,\\nInggris, Kanada, Amerika, Korea Selatan, Jerman, dan Belanda.\\n\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:2025/rerank-documents"
+			},
+			"response": []
+		}
+	]
+}
